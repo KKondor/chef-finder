@@ -1,0 +1,67 @@
+package hu.unideb.web;
+
+import hu.unideb.model.Chef;
+import hu.unideb.model.SkillLevel;
+import hu.unideb.service.ChefService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/chef")
+@AllArgsConstructor
+public class ChefControllerImpl implements ChefController {
+
+  private final ChefService chefService;
+
+  @Override
+  @GetMapping
+  public List<Chef> getAll() {
+    return chefService.getAllChefs();
+  }
+
+  @Override
+  @GetMapping("/search")
+  public List<Chef> search(Optional<String> name, Optional<SkillLevel> level, Optional<String> specialty) {
+    return chefService.searchChefs(name, level, specialty);
+  }
+
+  @Override
+  @GetMapping("/{id}")
+  public Chef getOne(@PathVariable Long id) {
+    return chefService.getChefById(id)
+      .orElseThrow(() -> new RuntimeException("Chef not found with id: " + id));
+  }
+
+  @Override
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    if (!chefService.existsById(id)) {
+      return ResponseEntity.notFound().build();
+    }
+    chefService.deleteChefById(id);
+    return ResponseEntity.noContent().build();
+  }
+
+
+  @Override
+  @PostMapping
+  public Chef createOne(@RequestBody Chef chef) {
+    return chefService.createChef(chef);
+  }
+
+  @Override
+  @PutMapping("/{id}")
+  public Chef updateOne(@PathVariable Long id, @RequestBody Chef chef) {
+    Chef existing = chefService.getChefById(id)
+      .orElseThrow(() -> new RuntimeException("Chef not found: " + id));
+    existing.setName(chef.getName());
+    existing.setAge(chef.getAge());
+    existing.setLevel(chef.getLevel());
+    existing.setSpecialty(chef.getSpecialty());
+    return chefService.updateChef(existing);
+  }
+}
