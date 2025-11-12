@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <h2>Add Chef</h2>
+
+  @if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  }
+
+  <form (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" [(ngModel)]="chef.name" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Age</label>
+      <input type="number" [(ngModel)]="chef.age" name="age" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Level</label>
+      <select [(ngModel)]="chef.level" name="level" class="form-select">
+        <option>JUNIOR</option>
+        <option>SENIOR</option>
+        <option>MASTER</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Specialty</label>
+      <input type="text" [(ngModel)]="chef.specialty" name="specialty" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Restaurant</label>
+      <select [(ngModel)]="selectedRestaurantId" name="restaurantId" class="form-select" required>
+        <option [ngValue]="null" disabled selected>Select a restaurant</option>
+        @for (r of restaurants; track r.id) {
+          <option [value]="r.id">{{ r.name }}</option>
+        }
+      </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+      @if(isEdit) { Update Chef } @else { Add Chef }
+    </button>
+  </form>
+</div>

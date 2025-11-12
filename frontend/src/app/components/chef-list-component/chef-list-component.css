@@ -1,0 +1,7 @@
+table.table {
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--bs-black);
+}
+.junior { background-color: #f7d9b0;}
+.senior { background-color: #e5e5e5;}
+.master { background-color: #fff5b0;}

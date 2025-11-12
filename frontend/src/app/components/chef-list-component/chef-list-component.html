@@ -1,0 +1,49 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Chef List</h2>
+
+  @if (loading) {
+    <div class="text-secondary">Loading...</div>
+  } @else if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  } @else {
+    <table class="table table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Level</th>
+        <th>Specialty</th>
+        <th>Restaurant</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (chef of chefs; track chef.compCode) {
+          <tr [ngClass]="{
+  'junior': chef.level === 'JUNIOR',
+  'senior': chef.level === 'SENIOR',
+  'master': chef.level === 'MASTER'
+}">
+
+
+          <td>{{ chef.compCode }}</td>
+            <td>{{ chef.name }}</td>
+            <td>{{ chef.age }}</td>
+            <td>{{ chef.level }}</td>
+            <td>{{ chef.specialty }}</td>
+            <td>{{ chef.restaurant?.name }}</td>
+            <td>
+              <a [routerLink]="['/chef', chef.compCode]" class="btn btn-sm btn-warning">Edit</a>
+              <button (click)="deleteChef(chef.compCode)" class="btn btn-sm btn-danger ms-1">Delete</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="text-center">No chefs found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
