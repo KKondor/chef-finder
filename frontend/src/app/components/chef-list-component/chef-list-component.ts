@@ -62,11 +62,11 @@ export class ChefListComponent implements OnInit {
   deleteChef(id: string | undefined) {
     if (!id) return;
 
-    const headers = { Authorization: 'Basic ' + btoa('user:pass') };
+    //const headers = { Authorization: 'Basic ' + btoa('user:pass') };
 
     if (!confirm('Are you sure you want to delete this chef?')) return;
 
-    this.http.delete(`http://localhost:8081/api/chef/${id}`, { headers })
+    this.http.delete(`http://localhost:8081/api/chef/${id}`)
       .subscribe({
         next: () => {
           // remove the chef from the list locally

@@ -35,23 +35,23 @@ export class RestaurantFormComponent {
   }
 
   fetchRestaurant(id: string) {
-    const headers = { Authorization: 'Basic ' + btoa('user:pass') };
-    this.http.get<Restaurant>(`http://localhost:8081/api/restaurant/${id}`, { headers }).subscribe({
+    //const headers = { Authorization: 'Basic ' + btoa('user:pass') };
+    this.http.get<Restaurant>(`http://localhost:8081/api/restaurant/${id}`).subscribe({
       next: (data) => this.restaurant = data,
       error: (err) => this.error = 'Failed to load restaurant.'
     });
   }
 
   submit() {
-    const headers = { Authorization: 'Basic ' + btoa('user:pass') };
+    //const headers = { Authorization: 'Basic ' + btoa('user:pass') };
     if (this.isEdit && this.restaurant.id) {
-      this.http.put<Restaurant>(`http://localhost:8081/api/restaurant/${this.restaurant.id}`, this.restaurant, { headers })
+      this.http.put<Restaurant>(`http://localhost:8081/api/restaurant/${this.restaurant.id}`, this.restaurant)
         .subscribe({
           next: () => this.router.navigate(['/restaurant']),
           error: () => this.error = 'Failed to update restaurant.'
         });
     } else {
-      this.http.post<Restaurant>('http://localhost:8081/api/restaurant', this.restaurant, { headers })
+      this.http.post<Restaurant>('http://localhost:8081/api/restaurant', this.restaurant)
         .subscribe({
           next: () => this.router.navigate(['/restaurant']),
           error: () => this.error = 'Failed to add restaurant.'

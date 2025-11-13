@@ -59,8 +59,8 @@ export class ChefFormComponent {
   }
 
   fetchChef(id: string) {
-    const headers = { Authorization: 'Basic ' + btoa('user:pass') };
-    this.http.get<Chef>(`http://localhost:8081/api/chef/${id}`,{headers}).subscribe({
+    //const headers = { Authorization: 'Basic ' + btoa('user:pass') };
+    this.http.get<Chef>(`http://localhost:8081/api/chef/${id}`).subscribe({
       next: data => {
         this.chef = data;
         if (this.chef.restaurant) {
@@ -72,7 +72,7 @@ export class ChefFormComponent {
   }
 
   submit() {
-    const headers = { Authorization: 'Basic ' + btoa('user:pass') };
+    //const headers = { Authorization: 'Basic ' + btoa('user:pass') };
     const restaurant = this.restaurants.find(r => r.id === this.selectedRestaurantId);
 
     if (restaurant) {
@@ -83,15 +83,15 @@ export class ChefFormComponent {
       // Edit existing chef
       this.http.put<Chef>(
         `http://localhost:8081/api/chef/${this.chef.compCode}`,
-        this.chef,
-        { headers }
+        this.chef
+
       ).subscribe({
         next: () => this.router.navigate(['/chef']),
         error: err => this.error = 'Failed to update chef.'
       });
     } else {
       // Add new chef
-      this.http.post<Chef>('http://localhost:8081/api/chef', this.chef, { headers })
+      this.http.post<Chef>('http://localhost:8081/api/chef', this.chef)
         .subscribe({
           next: () => this.router.navigate(['/chef']),
           error: err => this.error = 'Failed to add chef.'

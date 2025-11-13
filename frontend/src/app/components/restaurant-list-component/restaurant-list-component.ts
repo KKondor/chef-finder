@@ -47,8 +47,8 @@ export class RestaurantListComponent {
   }
 
   deleteRestaurant(id: number): void {
-    const headers = { Authorization: 'Basic ' + btoa('user:pass') };
-    this.http.delete(`http://localhost:8081/api/restaurant/${id}`, { headers })
+    //const headers = { Authorization: 'Basic ' + btoa('user:pass') };
+    this.http.delete(`http://localhost:8081/api/restaurant/${id}`)
       .subscribe({
         next: () => this.fetchRestaurants(),
         error: (err) => this.error = 'Failed to delete restaurant.'
