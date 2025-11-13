@@ -29,7 +29,7 @@ public interface ChefController {
   @DeleteMapping("/{id}")
   ResponseEntity<Void> deleteById(@NonNull @PathVariable Long id);
 
-  @PostMapping
+  @PostMapping("/add")
   Chef createOne(@NonNull @RequestBody Chef chef);
 
   @PutMapping("/{id}")

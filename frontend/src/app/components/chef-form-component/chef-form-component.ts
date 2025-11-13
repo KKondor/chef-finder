@@ -91,7 +91,7 @@ export class ChefFormComponent {
       });
     } else {
       // Add new chef
-      this.http.post<Chef>('http://localhost:8081/api/chef', this.chef)
+      this.http.post<Chef>('http://localhost:8081/api/chef/add', this.chef)
         .subscribe({
           next: () => this.router.navigate(['/chef']),
           error: err => this.error = 'Failed to add chef.'

@@ -21,12 +21,10 @@
       <tbody>
         @for (chef of chefs; track chef.compCode) {
           <tr [ngClass]="{
-  'junior': chef.level === 'JUNIOR',
-  'senior': chef.level === 'SENIOR',
-  'master': chef.level === 'MASTER'
-}">
-
-
+            'junior': chef.level === 'JUNIOR',
+            'senior': chef.level === 'SENIOR',
+            'master': chef.level === 'MASTER'
+            }">
           <td>{{ chef.compCode }}</td>
             <td>{{ chef.name }}</td>
             <td>{{ chef.age }}</td>

@@ -26,7 +26,7 @@ public interface RestaurantController {
   @DeleteMapping("/{id}")
   void deleteById(@NonNull @PathVariable Long id);
 
-  @PostMapping
+  @PostMapping("/add")
   Restaurant createOne(@NonNull @RequestBody Restaurant restaurant);
 
   @PutMapping("/{id}")

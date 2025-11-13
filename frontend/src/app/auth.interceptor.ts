@@ -2,12 +2,13 @@ import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-    const token = localStorage.getItem('authHeader'); // e.g., store "Basic dXNlcjpwYXNz"
+    const token = localStorage.getItem('authHeader');
 
     if (token) {
-        req = req.clone({
+        const cloned = req.clone({
             setHeaders: { Authorization: token }
         });
+        return next(cloned);
     }
 
     return next(req);

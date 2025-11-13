@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RouterLink} from '@angular/router';
-import {NgClass, NgStyle} from '@angular/common';
+import {NgClass} from '@angular/common';
 
 interface Restaurant {
   id: number;
@@ -28,7 +28,6 @@ interface Chef {
   imports: [
     RouterLink,
     NgClass,
-    NgStyle,
   ]
 })
 export class ChefListComponent implements OnInit {

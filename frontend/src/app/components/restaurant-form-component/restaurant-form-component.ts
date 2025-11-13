@@ -51,7 +51,7 @@ export class RestaurantFormComponent {
           error: () => this.error = 'Failed to update restaurant.'
         });
     } else {
-      this.http.post<Restaurant>('http://localhost:8081/api/restaurant', this.restaurant)
+      this.http.post<Restaurant>('http://localhost:8081/api/restaurant/add', this.restaurant)
         .subscribe({
           next: () => this.router.navigate(['/restaurant']),
           error: () => this.error = 'Failed to add restaurant.'

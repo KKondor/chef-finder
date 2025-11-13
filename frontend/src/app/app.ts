@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,12 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('chef-finder-fe');
+  protected readonly title = signal('chef-finder');
+    isAuthenticated(): boolean {
+        return !!localStorage.getItem('authHeader');
+    }
+
+    logout() {
+        localStorage.removeItem('authHeader');
+    }
 }
