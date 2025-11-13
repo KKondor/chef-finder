@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { ChefListComponent } from '../../../../chef-finder-fe/src/app/components/chef-list-component/chef-list-component';
-import { ChefFormComponent } from '../../../../chef-finder-fe/src/app/components/chef-form-component/chef-form-component';
-import {RestaurantListComponent} from '../../../../chef-finder-fe/src/app/components/restaurant-list-component/restaurant-list-component';
-import {RestaurantFormComponent} from '../../../../chef-finder-fe/src/app/components/restaurant-form-component/restaurant-form-component';
+import { ChefListComponent } from './components/chef-list-component/chef-list-component';
+import { ChefFormComponent } from './components/chef-form-component/chef-form-component';
+import {RestaurantListComponent} from './components/restaurant-list-component/restaurant-list-component';
+import {RestaurantFormComponent} from './components/restaurant-form-component/restaurant-form-component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/chef', pathMatch: 'full' },
