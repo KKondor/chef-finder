@@ -16,17 +16,13 @@ public interface ChefController {
   @GetMapping
   List<Chef> getAll();
 
-  @GetMapping("/search")
-  List<Chef> search(
-    @NonNull @RequestParam Optional<String> name,
-    @NonNull @RequestParam Optional<SkillLevel> level,
-    @NonNull @RequestParam Optional<String> specialty
-  );
-
-  @GetMapping("/{id}")
+  @GetMapping("/{id:\\d+}")
   Chef getOne(@NonNull @PathVariable Long id);
 
-  @DeleteMapping("/{id}")
+  @GetMapping("search")
+  List<Chef> searchChefs(@RequestParam(required = false) String q);
+
+  @DeleteMapping("/{id:\\d+}")
   ResponseEntity<Void> deleteById(@NonNull @PathVariable Long id);
 
   @PostMapping("/add")

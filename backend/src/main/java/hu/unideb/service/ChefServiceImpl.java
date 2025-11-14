@@ -31,15 +31,6 @@ public class ChefServiceImpl implements ChefService {
   }
 
   @Override
-  public List<Chef> searchChefs(Optional<String> name, Optional<SkillLevel> level, Optional<String> specialty) {
-    return getAllChefs().stream()
-      .filter(c -> name.map(n -> c.getName().toLowerCase().contains(n.toLowerCase())).orElse(true))
-      .filter(c -> level.map(l -> c.getLevel() == l).orElse(true))
-      .filter(c -> specialty.map(s -> c.getSpecialty().toLowerCase().contains(s.toLowerCase())).orElse(true))
-      .collect(Collectors.toList());
-  }
-
-  @Override
   public Optional<Chef> getChefById(Long id) {
     return chefRepository.findById(id);
   }
@@ -68,29 +59,14 @@ public class ChefServiceImpl implements ChefService {
   }
 
   @Override
-  public Chef createRandomChef() {
-    String first = FAKER.name().firstName();
-    String last = FAKER.name().lastName();
-    String middle = FAKER.name().nameWithMiddle();
-    String fullName = RANDOM.nextBoolean() ? first + " " + last : first + " " + middle + " " + last;
+  public List<Chef> searchChefs(String q) {
+      if (q == null || q.isBlank()) {
+          return (List<Chef>) chefRepository.findAll();
+      }
+      return chefRepository
+              .findByNameContainingIgnoreCaseOrSpecialtyContainingIgnoreCase(q, q);
+    }
 
-    int age = 25 + RANDOM.nextInt(20);
-    SkillLevel level = SkillLevel.getRandom();
-    String specialty = FAKER.food().dish();
-
-    List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
-    Restaurant restaurant = restaurants.get(RANDOM.nextInt(restaurants.size()));
-
-    Chef chef = Chef.builder()
-      .name(fullName)
-      .age(age)
-      .level(level)
-      .specialty(specialty)
-      .restaurant(restaurant)
-      .build();
-
-    return chefRepository.save(chef);
-  }
 
   @Override
   public boolean existsByRestaurantId(Long id) {

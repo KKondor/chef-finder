@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {RouterLink} from '@angular/router';
 import {NgClass} from '@angular/common';
+import {FormsModule} from '@angular/forms'
 
 interface Restaurant {
   id: number;
@@ -28,12 +29,15 @@ interface Chef {
   imports: [
     RouterLink,
     NgClass,
+    FormsModule
   ]
 })
 export class ChefListComponent implements OnInit {
   chefs: Chef[] = [];
   loading = true;
   error: string | null = null;
+  searchQuery: string = '';
+  searchTimeout: any = null;
 
   constructor(private http: HttpClient) {}
 
@@ -41,11 +45,15 @@ export class ChefListComponent implements OnInit {
     this.fetchChefs();
   }
 
-  fetchChefs(): void {
+  fetchChefs(query: string = ''): void {
     this.loading = true;
     this.error = null;
 
-    this.http.get<Chef[]>('http://localhost:8081/api/chef').subscribe({
+    const url = query
+        ? `http://localhost:8081/api/chef/search?q=${encodeURIComponent(query)}`
+        : 'http://localhost:8081/api/chef';
+
+      this.http.get<Chef[]>(url).subscribe({
       next: (data) => {
         this.chefs = data;
         this.loading = false;
@@ -57,6 +65,14 @@ export class ChefListComponent implements OnInit {
       },
     });
   }
+
+    onSearch() {
+        clearTimeout(this.searchTimeout);
+
+        this.searchTimeout = setTimeout(() => {
+            this.fetchChefs(this.searchQuery);
+        }, 300);
+    }
 
   deleteChef(id: string | undefined) {
     if (!id) return;

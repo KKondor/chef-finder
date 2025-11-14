@@ -10,8 +10,6 @@ public interface ChefService {
 
   List<Chef> getAllChefs();
 
-  List<Chef> searchChefs(Optional<String> name, Optional<SkillLevel> level, Optional<String> specialty);
-
   Optional<Chef> getChefById(Long id);
 
   Chef createChef(Chef chef);
@@ -22,7 +20,7 @@ public interface ChefService {
 
   boolean existsById(Long id);
 
-  Chef createRandomChef();
+  List<Chef> searchChefs(String q);
 
   boolean existsByRestaurantId(Long id);
 }

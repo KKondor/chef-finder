@@ -24,9 +24,8 @@ public class ChefControllerImpl implements ChefController {
   }
 
   @Override
-  @GetMapping("/search")
-  public List<Chef> search(Optional<String> name, Optional<SkillLevel> level, Optional<String> specialty) {
-    return chefService.searchChefs(name, level, specialty);
+  public List<Chef> searchChefs(String q) {
+      return chefService.searchChefs(q);
   }
 
   @Override
