@@ -71,7 +71,7 @@ export class ChefListComponent implements OnInit {
           // remove the chef from the list locally
           this.chefs = this.chefs.filter(c => c.compCode !== id);
         },
-        error: err => console.error('Failed to delete chef', err)
+          error: (err) => this.error = 'Failed to delete chef.'
       });
   }
 }
