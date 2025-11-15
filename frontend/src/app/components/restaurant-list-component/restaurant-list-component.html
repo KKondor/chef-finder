@@ -11,9 +11,10 @@
 
   @if (loading) {
     <div class="text-secondary">Loading...</div>
-  } @else if (error) {
-    <div class="alert alert-danger">{{ error }}</div>
   } @else {
+    @if (error) {
+       <div class="alert alert-danger">{{ error }}</div>
+    }
     <table class="table table-hover table-striped">
       <thead class="table-dark">
       <tr>

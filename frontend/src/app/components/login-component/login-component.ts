@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -15,7 +16,15 @@ export class LoginComponent {
     error: string | null = null;
     loading = false;
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
+
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            if (params['reason'] === 'unauthorized') {
+                this.error = 'Please log in to access this action.';
+            }
+        });
+    }
 
     login() {
         this.loading = true;

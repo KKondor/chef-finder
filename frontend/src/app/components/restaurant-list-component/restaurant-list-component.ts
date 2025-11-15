@@ -74,7 +74,13 @@ export class RestaurantListComponent {
 
             this.restaurants = this.restaurants.filter(c => c.id !== id);
         },
-        error: (err) => this.error = 'Failed to delete restaurant.'
+        error: (err) => {
+            if (err.status === 400) {
+                this.error = 'Restaurant is assigned to a chef and cannot be deleted.';
+            } else {
+                this.error = 'Failed to delete restaurant.';
+            }
+        }
       });
   }
 }
