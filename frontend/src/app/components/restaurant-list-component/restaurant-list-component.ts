@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Router, RouterLink} from '@angular/router';
-import {NgClass} from '@angular/common';
+import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms'
 
 
@@ -18,7 +17,6 @@ interface Restaurant {
   standalone: true,
   imports: [
     RouterLink,
-    NgClass,
     FormsModule
   ],
   templateUrl: 'restaurant-list-component.html'
@@ -30,11 +28,16 @@ export class RestaurantListComponent {
   searchQuery: string = '';
   searchTimeout: any = null;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchRestaurants();
   }
+
+    refresh(): void {
+        this.searchQuery = '';
+        this.fetchRestaurants();
+    }
 
   fetchRestaurants(query: string = ''): void {
     this.loading = true;

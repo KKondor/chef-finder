@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-@Order(0) // biztos, hogy a többi Runner előtt fusson
+@Order(0)
 public class AppUserRunner implements CommandLineRunner {
 
   private final AppUserRepository repository;

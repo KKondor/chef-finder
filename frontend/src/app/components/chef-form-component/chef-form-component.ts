@@ -80,7 +80,6 @@ export class ChefFormComponent {
     }
 
     if (this.isEdit && this.chef.compCode) {
-      // Edit existing chef
       this.http.put<Chef>(
         `http://localhost:8081/api/chef/${this.chef.compCode}`,
         this.chef
@@ -90,7 +89,6 @@ export class ChefFormComponent {
         error: err => this.error = 'Failed to update chef.'
       });
     } else {
-      // Add new chef
       this.http.post<Chef>('http://localhost:8081/api/chef/add', this.chef)
         .subscribe({
           next: () => this.router.navigate(['/chef']),

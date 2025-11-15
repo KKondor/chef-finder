@@ -40,7 +40,7 @@ public class ChefRunner implements CommandLineRunner {
 
       Chef chef = Chef.builder()
         .name(fullName)
-        .age(25 + RANDOM.nextInt(40)) // pl. 25-44 év
+        .age(25 + RANDOM.nextInt(40))
         .level(SkillLevel.getRandom())
         .specialty(FAKER.food().dish())
         .restaurant(restaurants.get(RANDOM.nextInt(restaurants.size())))

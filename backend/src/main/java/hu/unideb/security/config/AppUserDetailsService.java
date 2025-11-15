@@ -20,7 +20,7 @@ public class AppUserDetailsService implements UserDetailsService {
     return User.builder()
       .username(user.getUsername())
       .password(user.getPassword())
-      .roles("USER") // ez adja a Spring Security authorities-t
+      .roles("USER")
       .build();
   }
 

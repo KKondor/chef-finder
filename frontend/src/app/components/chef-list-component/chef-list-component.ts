@@ -66,6 +66,11 @@ export class ChefListComponent implements OnInit {
     });
   }
 
+    refresh(): void {
+        this.searchQuery = '';
+        this.fetchChefs();
+    }
+
     onSearch() {
         clearTimeout(this.searchTimeout);
 
@@ -84,7 +89,6 @@ export class ChefListComponent implements OnInit {
     this.http.delete(`http://localhost:8081/api/chef/${id}`)
       .subscribe({
         next: () => {
-          // remove the chef from the list locally
           this.chefs = this.chefs.filter(c => c.compCode !== id);
         },
           error: (err) => this.error = 'Failed to delete chef.'

@@ -4,13 +4,12 @@ import hu.unideb.model.Restaurant;
 import hu.unideb.service.ChefService;
 import hu.unideb.service.RestaurantService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/restaurant")
@@ -31,18 +30,17 @@ public class RestaurantControllerImpl implements RestaurantController {
         return restaurantService.searchRestaurants(q);
     }
 
-    @Override
+  @Override
   @GetMapping("/{id}")
-  public Restaurant getOne(@PathVariable Long id) {
+  public Restaurant getOne(@PathVariable @NonNull Long id) {
     return restaurantService.getRestaurantById(id)
       .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + id));
   }
 
   @Override
   @DeleteMapping("/{id}")
-  public void deleteById(@PathVariable Long id) {
+  public void deleteById(@PathVariable @NonNull Long id) {
       if (chefService.existsByRestaurantId(id)) {
-        // Throws 400 Bad Request instead of 500
         throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST,
           "Cannot delete restaurant with chefs assigned"
@@ -53,13 +51,13 @@ public class RestaurantControllerImpl implements RestaurantController {
 
   @Override
   @PostMapping
-  public Restaurant createOne(@RequestBody Restaurant restaurant) {
+  public Restaurant createOne(@RequestBody @NonNull Restaurant restaurant) {
     return restaurantService.createRestaurant(restaurant);
   }
 
   @Override
   @PutMapping("/{id}")
-  public Restaurant updateOne(@RequestBody Restaurant restaurant) {
+  public Restaurant updateOne(@RequestBody @NonNull Restaurant restaurant) {
     return restaurantService.updateRestaurant(restaurant);
   }
 }
