@@ -4,6 +4,7 @@ import hu.unideb.security.config.AppUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -25,11 +26,18 @@ public class SecurityConfig {
     http
       .csrf(AbstractHttpConfigurer::disable)
       .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/api/chef").permitAll()
-        .requestMatchers("api/restaurant").permitAll()
-        .requestMatchers("/api/restaurant/**").authenticated()
-        .requestMatchers("/api/chef/**").authenticated()
-        .anyRequest().authenticated()
+              .requestMatchers(HttpMethod.GET, "/api/chef/**").permitAll()
+              .requestMatchers(HttpMethod.GET, "/api/restaurant/**").permitAll()
+
+              .requestMatchers(HttpMethod.POST, "/api/chef/add").authenticated()
+              .requestMatchers(HttpMethod.PUT, "/api/chef/**").authenticated()
+              .requestMatchers(HttpMethod.DELETE, "/api/chef/**").authenticated()
+
+              .requestMatchers(HttpMethod.POST, "/api/restaurant/add").authenticated()
+              .requestMatchers(HttpMethod.PUT, "/api/restaurant/**").authenticated()
+              .requestMatchers(HttpMethod.DELETE, "/api/restaurant/**").authenticated()
+
+              .anyRequest().authenticated()
       )
       .httpBasic(httpBasic -> {});
     return http.build();
