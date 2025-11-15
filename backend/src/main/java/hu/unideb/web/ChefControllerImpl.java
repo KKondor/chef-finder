@@ -4,6 +4,7 @@ import hu.unideb.model.Chef;
 import hu.unideb.model.SkillLevel;
 import hu.unideb.service.ChefService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,14 +31,14 @@ public class ChefControllerImpl implements ChefController {
 
   @Override
   @GetMapping("/{id}")
-  public Chef getOne(@PathVariable Long id) {
+  public Chef getOne(@PathVariable @NonNull Long id) {
     return chefService.getChefById(id)
       .orElseThrow(() -> new RuntimeException("Chef not found with id: " + id));
   }
 
   @Override
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteById(@PathVariable @NonNull Long id) {
     if (!chefService.existsById(id)) {
       return ResponseEntity.notFound().build();
     }
@@ -47,14 +48,14 @@ public class ChefControllerImpl implements ChefController {
 
 
   @Override
-  @PostMapping
-  public Chef createOne(@RequestBody Chef chef) {
+  @PostMapping("/add")
+  public Chef createOne(@RequestBody @NonNull Chef chef) {
     return chefService.createChef(chef);
   }
 
   @Override
   @PutMapping("/{id}")
-  public Chef updateOne(@PathVariable Long id, @RequestBody Chef chef) {
+  public Chef updateOne(@PathVariable Long id, @RequestBody @NonNull Chef chef) {
     Chef existing = chefService.getChefById(id)
       .orElseThrow(() -> new RuntimeException("Chef not found: " + id));
     existing.setName(chef.getName());

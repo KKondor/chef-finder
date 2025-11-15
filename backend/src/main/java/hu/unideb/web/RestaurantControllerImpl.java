@@ -50,7 +50,7 @@ public class RestaurantControllerImpl implements RestaurantController {
     }
 
   @Override
-  @PostMapping
+  @PostMapping("/add")
   public Restaurant createOne(@RequestBody @NonNull Restaurant restaurant) {
     return restaurantService.createRestaurant(restaurant);
   }

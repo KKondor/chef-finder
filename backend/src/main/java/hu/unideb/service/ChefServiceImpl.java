@@ -1,33 +1,22 @@
 package hu.unideb.service;
 
-import com.github.javafaker.Faker;
 import hu.unideb.model.Chef;
-import hu.unideb.model.SkillLevel;
-import hu.unideb.model.Restaurant;
 import hu.unideb.repository.ChefRepository;
-import hu.unideb.repository.RestaurantRepository;
-import hu.unideb.service.ChefService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ChefServiceImpl implements ChefService {
 
   private final ChefRepository chefRepository;
-  private final RestaurantRepository restaurantRepository;
-
-  private static final Faker FAKER = new Faker();
-  private static final Random RANDOM = new Random();
 
   @Override
   public List<Chef> getAllChefs() {
-    return (List<Chef>) chefRepository.findAll();
+    return chefRepository.findAll();
   }
 
   @Override
@@ -61,7 +50,7 @@ public class ChefServiceImpl implements ChefService {
   @Override
   public List<Chef> searchChefs(String q) {
       if (q == null || q.isBlank()) {
-          return (List<Chef>) chefRepository.findAll();
+          return chefRepository.findAll();
       }
       return chefRepository
               .findByNameContainingIgnoreCaseOrSpecialtyContainingIgnoreCase(q, q);
