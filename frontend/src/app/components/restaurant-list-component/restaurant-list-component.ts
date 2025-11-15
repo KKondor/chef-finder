@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router, RouterLink} from '@angular/router';
+import {NgClass} from '@angular/common';
+import {FormsModule} from '@angular/forms'
+
 
 interface Restaurant {
   id: number;
@@ -14,7 +17,9 @@ interface Restaurant {
   selector: 'app-restaurant-list',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    NgClass,
+    FormsModule
   ],
   templateUrl: 'restaurant-list-component.html'
 })
@@ -22,6 +27,8 @@ export class RestaurantListComponent {
   restaurants: Restaurant[] = [];
   loading = true;
   error: string | null = null;
+  searchQuery: string = '';
+  searchTimeout: any = null;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -29,11 +36,15 @@ export class RestaurantListComponent {
     this.fetchRestaurants();
   }
 
-  fetchRestaurants(): void {
+  fetchRestaurants(query: string = ''): void {
     this.loading = true;
     this.error = null;
 
-    this.http.get<Restaurant[]>('http://localhost:8081/api/restaurant').subscribe({
+    const url = query
+       ? `http://localhost:8081/api/restaurant/search?q=${encodeURIComponent(query)}`
+       : 'http://localhost:8081/api/restaurant';
+
+    this.http.get<Restaurant[]>(url).subscribe({
       next: (data) => {
         this.restaurants = data.sort((a, b) => (a.id ?? 0) - (b.id ?? 0));
         this.loading = false;
@@ -45,6 +56,14 @@ export class RestaurantListComponent {
       }
     });
   }
+
+    onSearch() {
+        clearTimeout(this.searchTimeout);
+
+        this.searchTimeout = setTimeout(() => {
+            this.fetchRestaurants(this.searchQuery);
+        }, 300);
+    }
 
   deleteRestaurant(id: number): void {
     //const headers = { Authorization: 'Basic ' + btoa('user:pass') };

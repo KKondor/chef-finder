@@ -26,16 +26,12 @@ public class RestaurantControllerImpl implements RestaurantController {
     return restaurantService.getAllRestaurants();
   }
 
-  @Override
-  @GetMapping("/search")
-  public List<Restaurant> search(Optional<String> city, Optional<String> street) {
-    return restaurantService.getAllRestaurants().stream()
-      .filter(r -> city.map(c -> r.getCity().toLowerCase().contains(c.toLowerCase())).orElse(true))
-      .filter(r -> street.map(s -> r.getStreet().toLowerCase().contains(s.toLowerCase())).orElse(true))
-      .collect(Collectors.toList());
-  }
+    @Override
+    public List<Restaurant> searchRestaurants(String q) {
+        return restaurantService.searchRestaurants(q);
+    }
 
-  @Override
+    @Override
   @GetMapping("/{id}")
   public Restaurant getOne(@PathVariable Long id) {
     return restaurantService.getRestaurantById(id)

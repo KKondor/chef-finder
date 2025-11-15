@@ -1,5 +1,6 @@
 package hu.unideb.web;
 
+
 import hu.unideb.model.Restaurant;
 import lombok.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +16,12 @@ public interface RestaurantController {
   List<Restaurant> getAll();
 
   @GetMapping("/search")
-  List<Restaurant> search(
-    @NonNull @RequestParam Optional<String> city,
-    @NonNull @RequestParam Optional<String> street
-  );
+  List<Restaurant> searchRestaurants(@RequestParam(required = false) String q);
 
-  @GetMapping("/{id}")
+  @GetMapping("/{id:\\d+}")
   Restaurant getOne(@NonNull @PathVariable Long id);
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/{id:\\d+}")
   void deleteById(@NonNull @PathVariable Long id);
 
   @PostMapping("/add")

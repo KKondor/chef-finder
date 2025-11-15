@@ -1,5 +1,6 @@
 package hu.unideb.service;
 
+import hu.unideb.model.Chef;
 import hu.unideb.model.Restaurant;
 import hu.unideb.repository.ChefRepository;
 import hu.unideb.repository.RestaurantRepository;
@@ -40,7 +41,17 @@ public class RestaurantServiceImpl implements RestaurantService {
     return restaurantRepository.save(restaurant);
   }
 
-  @Override
+    @Override
+    public List<Restaurant> searchRestaurants(String q) {
+        if (q == null || q.isBlank()) {
+            return (List<Restaurant>) restaurantRepository.findAll();
+        }
+        return restaurantRepository
+                .findByNameContainingIgnoreCaseOrCityContainingIgnoreCase(q, q);
+
+    }
+
+    @Override
   public void deleteRestaurantById(Long id) {
     restaurantRepository.deleteById(id);
   }
