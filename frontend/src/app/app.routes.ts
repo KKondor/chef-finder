@@ -14,5 +14,5 @@ export const routes: Routes = [
   { path: 'chef/:id', component: ChefFormComponent },
   { path: 'restaurant', component: RestaurantListComponent},
   { path: 'restaurant/add', component: RestaurantFormComponent ,canActivate: [AuthGuard]},
-  { path: 'restaurant/:id', component: RestaurantFormComponent ,canActivate: [AuthGuard]},
+  { path: 'restaurant/:id', component: RestaurantFormComponent },
 ];
